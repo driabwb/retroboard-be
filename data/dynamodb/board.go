@@ -78,7 +78,8 @@ func (bds BoardDynamoStore) UpdateTitle(ctx context.Context, id, title string) e
 	}
 
 	update := expression.Set(expression.Name(titleProp), expression.Value(title))
-	expr, err := expression.NewBuilder().WithUpdate(update).Build()
+	cond := expression.Equal(expression.Name(hashKeyProp), expression.Value(makeBoardHK(id)))
+	expr, err := expression.NewBuilder().WithUpdate(update).WithCondition(cond).Build()
 	if err != nil {
 		return fmt.Errorf("Failed to build update expression: %w", err)
 	}
@@ -87,6 +88,7 @@ func (bds BoardDynamoStore) UpdateTitle(ctx context.Context, id, title string) e
 		TableName:                 TableName,
 		Key:                       key,
 		UpdateExpression:          expr.Update(),
+		ConditionExpression:       expr.Condition(),
 		ExpressionAttributeNames:  expr.Names(),
 		ExpressionAttributeValues: expr.Values(),
 	}

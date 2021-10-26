@@ -114,8 +114,9 @@ func (cds CardDynamoStore) UpdateColumn(ctx context.Context, id, columnID, board
 	update := expression.
 		Set(expression.Name(columnProp), expression.Value(columnID)).
 		Set(expression.Name(gsi1HKProp), expression.Value(makeCardGSI1HK(columnID)))
+	cond := expression.Equal(expression.Name(hashKeyProp), expression.Value(makeCardHK(boardID)))
 
-	expr, err := expression.NewBuilder().WithUpdate(update).Build()
+	expr, err := expression.NewBuilder().WithUpdate(update).WithCondition(cond).Build()
 	if err != nil {
 		return fmt.Errorf("Failed to build update expression: %w", err)
 	}
@@ -124,6 +125,7 @@ func (cds CardDynamoStore) UpdateColumn(ctx context.Context, id, columnID, board
 		TableName:                 TableName,
 		Key:                       key,
 		UpdateExpression:          expr.Update(),
+		ConditionExpression:       expr.Condition(),
 		ExpressionAttributeNames:  expr.Names(),
 		ExpressionAttributeValues: expr.Values(),
 	}
@@ -143,8 +145,9 @@ func (cds CardDynamoStore) UpdateContent(ctx context.Context, id, boardID, conte
 	}
 	update := expression.
 		Set(expression.Name(contentProp), expression.Value(content))
+	cond := expression.Equal(expression.Name(hashKeyProp), expression.Value(makeCardHK(boardID)))
 
-	expr, err := expression.NewBuilder().WithUpdate(update).Build()
+	expr, err := expression.NewBuilder().WithUpdate(update).WithCondition(cond).Build()
 	if err != nil {
 		return fmt.Errorf("Failed to build update expression: %w", err)
 	}
@@ -153,6 +156,7 @@ func (cds CardDynamoStore) UpdateContent(ctx context.Context, id, boardID, conte
 		TableName:                 TableName,
 		Key:                       key,
 		UpdateExpression:          expr.Update(),
+		ConditionExpression:       expr.Condition(),
 		ExpressionAttributeNames:  expr.Names(),
 		ExpressionAttributeValues: expr.Values(),
 	}
@@ -175,8 +179,9 @@ func (cds CardDynamoStore) AddVotes(ctx context.Context, id, boardID string, del
 			expression.Value(delta),
 		),
 		)
+	cond := expression.Equal(expression.Name(hashKeyProp), expression.Value(makeCardHK(boardID)))
 
-	expr, err := expression.NewBuilder().WithUpdate(update).Build()
+	expr, err := expression.NewBuilder().WithUpdate(update).WithCondition(cond).Build()
 	if err != nil {
 		return fmt.Errorf("Failed to build update expression: %w", err)
 	}
@@ -185,6 +190,7 @@ func (cds CardDynamoStore) AddVotes(ctx context.Context, id, boardID string, del
 		TableName:                 TableName,
 		Key:                       key,
 		UpdateExpression:          expr.Update(),
+		ConditionExpression:       expr.Condition(),
 		ExpressionAttributeNames:  expr.Names(),
 		ExpressionAttributeValues: expr.Values(),
 	}
