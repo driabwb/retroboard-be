@@ -106,7 +106,7 @@ func (cds CardDynamoStore) DeleteCard(ctx context.Context, id, boardID string) e
 	return nil
 }
 
-func (cds CardDynamoStore) UpdateColumn(ctx context.Context, id, columnID, boardID string) error {
+func (cds CardDynamoStore) UpdateCardColumn(ctx context.Context, id, columnID, boardID string) error {
 	key, err := makeCardKey(id, boardID)
 	if err != nil {
 		return fmt.Errorf("Failed to Marshal card key: %w", err)
@@ -138,7 +138,7 @@ func (cds CardDynamoStore) UpdateColumn(ctx context.Context, id, columnID, board
 	return nil
 }
 
-func (cds CardDynamoStore) UpdateContent(ctx context.Context, id, boardID, content string) error {
+func (cds CardDynamoStore) UpdateCardContent(ctx context.Context, id, boardID, content string) error {
 	key, err := makeCardKey(id, boardID)
 	if err != nil {
 		return fmt.Errorf("Failed to Marshal card key: %w", err)
@@ -168,7 +168,7 @@ func (cds CardDynamoStore) UpdateContent(ctx context.Context, id, boardID, conte
 	return nil
 }
 
-func (cds CardDynamoStore) AddVotes(ctx context.Context, id, boardID string, delta int) error {
+func (cds CardDynamoStore) AddCardVotes(ctx context.Context, id, boardID string, delta int) error {
 	key, err := makeCardKey(id, boardID)
 	if err != nil {
 		return fmt.Errorf("Failed to Marshal card key: %w", err)

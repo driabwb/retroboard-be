@@ -91,7 +91,7 @@ func (cds ColumnDynamoStore) DeleteColumn(ctx context.Context, id, boardID strin
 	return nil
 }
 
-func (cds ColumnDynamoStore) UpdateTitle(ctx context.Context, id, boardID, title string) error {
+func (cds ColumnDynamoStore) UpdateColumnTitle(ctx context.Context, id, boardID, title string) error {
 	key, err := makeColumnKey(id, boardID)
 	if err != nil {
 		return fmt.Errorf("Failed to Marshal column key: %w", err)

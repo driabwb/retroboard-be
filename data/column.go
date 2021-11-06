@@ -15,5 +15,5 @@ type ColumnDeleter interface {
 }
 
 type ColumnTitleUpdater interface {
-	UpdateTitle(ctx context.Context, id, boardID, title string) error
+	UpdateColumnTitle(ctx context.Context, id, boardID, title string) error
 }

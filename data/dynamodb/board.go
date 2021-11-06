@@ -71,7 +71,7 @@ func (bds BoardDynamoStore) SaveBoard(ctx context.Context, board domain.Board) e
 	return nil
 }
 
-func (bds BoardDynamoStore) UpdateTitle(ctx context.Context, id, title string) error {
+func (bds BoardDynamoStore) UpdateBoardTitle(ctx context.Context, id, title string) error {
 	key, err := makeBoardKey(id)
 	if err != nil {
 		return fmt.Errorf("Failed to Marshal board key: %w", err)

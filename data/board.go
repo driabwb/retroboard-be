@@ -11,5 +11,5 @@ type BoardStorer interface {
 }
 
 type BoardTitleUpdater interface {
-	UpdateTitle(ctx context.Context, id, title string) error
+	UpdateBoardTitle(ctx context.Context, id, title string) error
 }

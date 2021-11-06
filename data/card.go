@@ -11,15 +11,15 @@ type CardStorer interface {
 }
 
 type CardColumnUpdater interface {
-	UpdateColumn(ctx context.Context, id, columnID, boardID string) error
+	UpdateCardColumn(ctx context.Context, id, columnID, boardID string) error
 }
 
 type CardContentUpdater interface {
-	UpdateContent(ctx context.Context, id, boardID, content string) error
+	UpdateCardContent(ctx context.Context, id, boardID, content string) error
 }
 
 type CardVoteUpdater interface {
-	AddVotes(ctx context.Context, id, boardID string, delta int) error
+	AddCardVotes(ctx context.Context, id, boardID string, delta int) error
 }
 
 type CardDeleter interface {
