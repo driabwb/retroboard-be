@@ -1,5 +1,12 @@
 package messages
 
+import "fmt"
+
+type Message struct {
+	Type string `json:"type"`
+	Msg  []byte `json:"message"`
+}
+
 const (
 	MessageCreateCard        = "MessageCreateCard"
 	MessageUpdateCardContent = "MessageUpdateCardContent"
@@ -12,6 +19,10 @@ const (
 	MessageDeleteColumn      = "MessageDeleteColumn"
 
 	MessageUpdateBoardTitle = "MessageUpdateBoardTitle"
+)
+
+var (
+	ErrorUnknownMessageType = func(msgType string) error { return fmt.Errorf("Unknown Messag Type: %s", msgType) }
 )
 
 type (
@@ -60,4 +71,19 @@ type (
 		BoardID string `json:"board_id"`
 		Title   string `json:"title"`
 	}
+
+	MessageErrorPayload struct {
+		MessageType string `json:"message_type"`
+		Error       error  `json:"error"`
+	}
 )
+
+func NewMessageError(request Message, err error) Message {
+	return Message{
+		Type: messages.MessageError,
+		Msg: messages.MessageErrorPayload{
+			MessageType: msg.Type,
+			Error:       err,
+		},
+	}
+}

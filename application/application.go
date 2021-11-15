@@ -12,7 +12,7 @@ type (
 	}
 
 	CardContentUpdater interface {
-		UpdateCardTitle(ctx context.Context, cardID, boardID, content string) error
+		UpdateCardContent(ctx context.Context, cardID, boardID, content string) error
 	}
 
 	CardColumnUpdater interface {
@@ -20,7 +20,7 @@ type (
 	}
 
 	CardVoteUpdater interface {
-		AddVotes(ctx context.Context, cardID, boardID string, delta int) error
+		UpdateCardVotes(ctx context.Context, cardID, boardID string, delta int) error
 	}
 
 	CardDeleter interface {
